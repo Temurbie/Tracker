@@ -1,0 +1,35 @@
+<nav class="border-b border-blue-500 shadow-blue-300 shadow-2xl">
+  <div class="max-w-6xl mx-auto flex items-center justify-between p-4">
+    
+    <div class="text-xl font-bold cursor-pointer" routerLink="/">
+      LOGO
+    </div>
+
+    <a
+      routerLink="/about"
+      class="text-lg hover:text-blue-600 transition cursor-pointer"
+    >
+      Biz haqimizda
+    </a>
+    <div class="flex gap-1">
+      <button
+        routerLink="/premium"
+        class="bg-blue-500 text-black px-4 py-2
+               hover:bg-blue-700 hover:text-white
+               rounded-l-2xl transition"
+      >
+        ⭐ Premium
+      </button>
+
+      <button
+        routerLink="/login"
+        class="bg-blue-500 text-black px-4 py-2
+               hover:bg-blue-700 hover:text-white
+               rounded-r-2xl transition"
+      >
+        Kirish
+      </button>
+    </div>
+
+  </div>
+</nav>
