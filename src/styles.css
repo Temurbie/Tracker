@@ -1,3 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import "tailwindcss";
+
+@layer component{
+    .btn{
+        @apply bg-blue-500 text-black px-4 py-2
+               hover:bg-blue-700 hover:text-white
+                transition cursor-pointer
+    }
+    .input-select{
+        @apply w-full border-solid border-2 border-black outline-none p-2 rounded-2xl my-2
+    }
+    .label-select{
+        @apply font-bold text-[18px] text-gray-500
+    }
+}
