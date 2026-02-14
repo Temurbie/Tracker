@@ -1,0 +1,144 @@
+<div class="max-w-5xl mx-auto p-4 md:p-6 space-y-6">
+
+  <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-3">
+    <div>
+      <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight">Transactions</h1>
+      <p class="text-sm text-gray-500 mt-1">
+        Barcha kirim/chiqimlar ro‘yxati
+      </p>
+    </div>
+
+    <div class="w-full md:w-[340px]">
+      <input
+        class="w-full rounded-xl border border-gray-200 px-4 py-3 outline-none focus:ring-2 focus:ring-black/10"
+        type="text"
+        placeholder="Search: category / comment / payment..."
+        [value]="query()"
+        (input)="query.set(($any($event.target).value))"
+      />
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div class="rounded-2xl border border-gray-200 bg-white shadow-sm p-5">
+      <p class="text-sm text-gray-500">Balance</p>
+      <p class="text-2xl font-extrabold mt-2">{{ balance() | currency:'UZS':'symbol':'1.0-0' }}</p>
+      <p class="text-xs text-gray-400 mt-1">income - expense</p>
+    </div>
+
+    <div class="rounded-2xl border border-gray-200 bg-white shadow-sm p-5">
+      <p class="text-sm text-gray-500">Income</p>
+      <p class="text-2xl font-extrabold mt-2">{{ incomeAmount() | currency:'UZS':'symbol':'1.0-0' }}</p>
+      <p class="text-xs text-gray-400 mt-1">jami kirim</p>
+    </div>
+
+    <div class="rounded-2xl border border-gray-200 bg-white shadow-sm p-5">
+      <p class="text-sm text-gray-500">Expense</p>
+      <p class="text-2xl font-extrabold mt-2">{{ expenseAmount() | currency:'UZS':'symbol':'1.0-0' }}</p>
+      <p class="text-xs text-gray-400 mt-1">jami chiqim</p>
+    </div>
+  </div>
+
+  <div class="flex flex-wrap items-center gap-2">
+    <button
+      class="px-4 py-2 rounded-xl border text-sm font-semibold"
+      [class.bg-black]="filter() === 'all'"
+      [class.text-white]="filter() === 'all'"
+      [class.border-black]="filter() === 'all'"
+      (click)="filter.set('all')"
+    >
+      All
+    </button>
+
+    <button
+      class="px-4 py-2 rounded-xl border text-sm font-semibold"
+      [class.bg-black]="filter() === 'income'"
+      [class.text-white]="filter() === 'income'"
+      [class.border-black]="filter() === 'income'"
+      (click)="filter.set('income')"
+    >
+      Income
+    </button>
+
+    <button
+      class="px-4 py-2 rounded-xl border text-sm font-semibold"
+      [class.bg-black]="filter() === 'expense'"
+      [class.text-white]="filter() === 'expense'"
+      [class.border-black]="filter() === 'expense'"
+      (click)="filter.set('expense')"
+    >
+      Expense
+    </button>
+
+    <span class="ml-auto text-sm text-gray-500">
+      {{ filtered().length }} ta
+    </span>
+  </div>
+  @if(filtered().length === 0) {
+    <div class="rounded-2xl border border-gray-200 bg-white p-10 text-center text-gray-500">
+      Hozircha transaction yo'q
+    </div>
+  } @else {
+    <div class="space-y-3">
+      @for(t of filtered(); track t.id) {
+        <div
+          class="rounded-2xl border border-gray-200 bg-white shadow-sm p-4 md:p-5 flex flex-col md:flex-row md:items-center md:justify-between gap-3"
+          [class.border-green-200]="t.type === 'income'"
+          [class.bg-green-50]="t.type === 'income'"
+          [class.border-red-200]="t.type === 'expense'"
+          [class.bg-red-50]="t.type === 'expense'"
+        >
+          <div class="min-w-0">
+            <div class="flex items-center gap-2">
+              <span
+                class="text-xs font-bold px-3 py-1 rounded-full"
+                [class.bg-green-200]="t.type === 'income'"
+                [class.text-green-800]="t.type === 'income'"
+                [class.bg-red-200]="t.type === 'expense'"
+                [class.text-red-800]="t.type === 'expense'"
+              >
+                {{ t.type === 'income' ? 'KIRIM' : 'CHIQIM' }}
+              </span>
+
+              @if(t.catigory) {
+                <p class="font-bold truncate">{{ t.catigory }}</p>
+              } @else {
+                <p class="font-bold truncate text-gray-600">No category</p>
+              }
+            </div>
+
+            <p class="text-sm text-gray-600 mt-1">
+              {{ t.transictionDate | date:'mediumDate' }}
+              <span class="mx-2 text-gray-300">•</span>
+              @if(t.paymentMethod) { <span>{{ t.paymentMethod }}</span> } @else { <span class="text-gray-400">No payment</span> }
+            </p>
+
+            @if(t.comment) {
+              <p class="text-sm text-gray-700 mt-2">
+                {{ t.comment }}
+              </p>
+            }
+          </div>
+          <div class="flex items-center justify-between md:justify-end gap-3">
+            <div class="text-right">
+              <p class="text-lg font-extrabold">
+                {{ t.amount | currency:'UZS':'symbol':'1.0-0' }}
+              </p>
+              <p class="text-xs text-gray-500">
+                {{ t.type === 'income' ? 'Krim' : 'Chiqim' }}
+              </p>
+            </div>
+
+            <button
+              class="px-4 py-2 rounded-xl border border-gray-300 bg-white hover:bg-gray-50 text-sm font-semibold"
+              (click)="remove(t.id)"
+              title="Delete"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

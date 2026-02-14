@@ -2,7 +2,15 @@
 
 @import "tailwindcss";
 
-@layer component{
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-6px); }
+  80% { transform: translateX(6px); }
+}
+
+@layer components{
     .btn{
         @apply bg-blue-500 text-black px-4 py-2
                hover:bg-blue-700 hover:text-white
@@ -13,5 +21,9 @@
     }
     .label-select{
         @apply font-bold text-[18px] text-gray-500
+    }
+    .input-select.ng-invalid.ng-touched{
+        @apply border-red-500 border-2;
+        animation: shake 0.3s ease-in-out;
     }
 }

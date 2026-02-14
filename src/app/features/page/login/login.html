@@ -1,15 +1,28 @@
-<div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2">
+<div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 mt-10 order-1 lg:order-2">
     <div class="">
         <p class="text-4xl font-bold mt-10">Tezda Boshlash</p>
 
         <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="mt-6 border-2 border-gray-300 rounded-3xl p-5 shadow-2xl">
             <label class="label-select" for="nickName">NickName</label>
-            <input class="input-select" type="text" formControlName="nickName">
+            <input class="input-select" type="text" name="nickName" formControlName="nickName">
+            @if(f['nickName'].touched && f['nickName'].invalid){
+                <small class="block mb-3 text-red-600 ms-5">
+                    @if(f['nickName'].errors?.['required']){
+                        NickName bulishi majburiy
+                    }
+                     @if(f['nickName'].errors?.['minlength']){
+                        Nickname 5 tadan kam bulmasin 
+                    }
+                </small>
+            }
              <label class="label-select" for="nickName">Tug'ulgan Kuniz</label>
             <input class="input-select" type="date" formControlName="birthDate">
             <button class="btn rounded-2xl text-2xl mt-4 items-center" type="submit">Krish</button>
         </form>
    
 
+    </div>
+    <div class="mt-25  order-1 lg:order-2">
+        <img class="w-full h-auto max-w-full object-contain rounded-2xl" src="https://repository-images.githubusercontent.com/100134141/902d49e2-02d5-4dfc-974c-8a99c4d8f619" alt="">
     </div>
 </div>

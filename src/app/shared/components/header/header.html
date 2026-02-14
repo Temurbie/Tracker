@@ -18,12 +18,28 @@
         ⭐ Premium
       </button>
 
-      <button
+    @if(!isUserLogined()){
+        <button
         routerLink="login"
         class="btn rounded-r-2xl"
       >
         Kirish
       </button>
+    }
+    @if(isUserLogined()){
+        <button
+        (click)="logOut()"
+        class="btn rounded-r-2xl"
+      >
+        Chiqish
+      </button>
+      <button routerLink="/expense" class="btn rounded-2xl">
+        Dashboard
+      </button>
+      <button routerLink="/all" class="btn rounded-2xl">
+        Barcha Tranzaksiyalar
+      </button>
+    }
     </div>
 
   </div>

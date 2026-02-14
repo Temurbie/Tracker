@@ -1,0 +1,33 @@
+<div class="w-[400px] border-2 border-gray-300 min-h-[calc(100vh-135px)] shadow-2xl bg-white rounded-2xl p-6 flex flex-col items-center">
+  <!-- Avatar -->
+  <div class="w-28 h-28 rounded-full border-2 border-gray-200 overflow-hidden shadow-md flex items-center justify-center bg-gray-50">
+    <span class="text-3xl font-bold text-gray-400">{{userNameLiter()}}</span>
+  </div>
+
+  <!-- Name -->
+  <h2 class="mt-4 text-2xl font-bold text-gray-800">{{currentUser()?.nickName}}</h2>
+
+  <!-- Reg date -->
+  <p class="mt-1 text-sm text-gray-500">{{currentUser()?.year}}</p>
+
+  <!-- Info card -->
+  <div class="mt-6 w-full border border-gray-200 rounded-2xl p-4 bg-gray-50">
+    <p class="text-sm text-gray-500">Nickname</p>
+    <p class="text-lg font-semibold text-gray-800">{{currentUser()?.nickName}}</p>
+
+    <div class="mt-4">
+      <p class="text-sm text-gray-500">Reg date</p>
+      <p class="text-base font-medium text-gray-800">{{currentUser()?.regDate | date}}</p>
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="mt-auto w-full pt-6 flex gap-3">
+    <button class="flex-1 rounded-xl py-2 font-semibold border border-gray-300 hover:bg-gray-100 transition">
+      Tahrirlash
+    </button>
+    <button class="flex-1 rounded-xl py-2 font-semibold bg-blue-600 text-black hover:text-white cursor-pointer hover:bg-blue-700 transition" (click)="logOut()">
+      Chiqish
+    </button>
+  </div>
+</div>

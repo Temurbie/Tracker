@@ -3,6 +3,7 @@ import { UserService } from '../../../shared/services/user.service';
 import { IUser } from '../../../shared/interface/user.interface';
 import {v4 as uuidv4} from 'uuid'
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -11,27 +12,36 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
   styleUrl: './login.css',
 })
 export class Login {
-onSubmit() {
-throw new Error('Method not implemented.');
-}
+
 
   private userSerivcce = inject(UserService);
   private fb = inject(FormBuilder);
+  private route = inject(Router)
 
   userForm =this.fb.group({
-    nickName: ['', Validators.required, Validators.minLength(5)],
+    nickName: ['', [Validators.required, Validators.minLength(5)]],
     birthDate: ['']
   })
 
-  loginUser(){
+
+  onSubmit() { 
+    if(this.userForm.invalid){
+      this.userForm.markAllAsTouched();
+      return
+    }
     const model: IUser ={
       id : uuidv4(),
-      nickName:this.userForm.value.nickName,
-      regDate: this.userForm.value.birthDate,
-      year: 1997
+      nickName:this.userForm.value.nickName!,
+      regDate: Date.now(),
+      year: Number(this.userForm.value.birthDate)
 
     }
     this.userSerivcce.loginUser(model);
-  }
+    this.route.navigateByUrl('/expense')
+}
+
+get f(){
+  return this.userForm.controls;
+}
 
 }
